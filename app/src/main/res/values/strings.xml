@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SetGeo</string>
+    <string name="drawer_item_home">Home</string>
+    <string name="drawer_item_settings">Menu</string>
+</resources>
