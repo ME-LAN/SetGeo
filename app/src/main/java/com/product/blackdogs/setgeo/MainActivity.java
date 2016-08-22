@@ -1,5 +1,9 @@
 package com.product.blackdogs.setgeo;
 
+import android.content.Intent;
+import android.support.annotation.IdRes;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,8 +23,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 public class MainActivity extends AppCompatActivity {
-
     Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +33,18 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setDrawer();
 
+
+
+
+    }
+
+    private void setDrawer() {
 
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_home);
         SecondaryDrawerItem item2 = (SecondaryDrawerItem) new SecondaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_settings);
-//create the drawer and remember the `Drawer` result object
+        //create the drawer and remember the `Drawer` result object
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -52,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         Drawer result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
-                .withTranslucentStatusBar(false)
+                //.withTranslucentStatusBar(true)
                 //.withActionBarDrawerToggle(false)
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
@@ -69,16 +80,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .build();
-
-        new DrawerBuilder()
-                .withActivity(this)
-                .addDrawerItems(
-                        //pass your items here
-                )
-                .withDrawerGravity(Gravity.END)
-                .append(result);
-
-//            result.addItem(new DividerDrawerItem());
+        //           result.addItem(new DividerDrawerItem());
+        result.addStickyFooterItem(new PrimaryDrawerItem().withName("StickyFooterItem"));
     }
 
     @Override
@@ -86,5 +89,14 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Necessary to restore the BottomBar's state, otherwise we would
+        // lose the current tab on orientation change.
+        //mBottomBar.onSaveInstanceState(outState);
     }
 }
